@@ -553,5 +553,9 @@ export function parseSnapshotJson(json: unknown): F5Snapshot | null {
 	}
 
 	if (records.length === 0) return null;
-	return { timestamp: (raw._timestamp as string) ?? new Date().toISOString(), records };
+	return {
+		timestamp: (raw._timestamp as string) ?? new Date().toISOString(),
+		records,
+		poolRecords: []
+	};
 }
