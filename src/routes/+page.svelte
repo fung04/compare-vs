@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { Card, Button, Heading, P } from 'flowbite-svelte';
 	import { CheckCircleSolid, ExclamationCircleOutline } from 'flowbite-svelte-icons';
 </script>
@@ -78,7 +80,7 @@
 			<div
 				class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse"
 			>
-				<Button href="/local">Upload JSON files</Button>
+				<Button onclick={() => goto(resolve('local'))}>Upload JSON files</Button>
 			</div>
 		</Card>
 	</div>
