@@ -9,7 +9,7 @@
 	<div class="text-center">
 		<Heading tag="h6" class="mb-4">F5 BIG-IP firmware upgrade assistant</Heading>
 		<Heading tag="h2" class="mb-4 text-2xl font-extrabold  md:text-2xl lg:text-5xl">
-			Verify your upgrade didt break anything.</Heading
+			Verify your upgrade didn't break anything.</Heading
 		>
 		<P class="mb-6 text-center text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
 			Capture virtual server, pool and member status before and after a firmware upgrade, then

@@ -424,13 +424,25 @@
 <div class="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
 	<div class="mx-auto max-w-4xl flex-1 space-y-4">
 		<Card size="xl" class="p-4 sm:p-6 md:p-8">
-			<h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-				Local Mode — Upload JSON Files
-			</h5>
-			<p class="leading-tight font-normal text-gray-700 dark:text-gray-400">
-				Upload the 4 exported JSON files for each stage (before & after upgrade). All processing
-				happens in your browser — no data leaves your machine.
-			</p>
+			{#if mode === 'Manual'}
+				<h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+					Local Mode — Upload JSON Files
+				</h5>
+				<p class="leading-tight font-normal text-gray-700 dark:text-gray-400">
+					Upload the exported JSON files from your BIG-IPs for both "before" and "after" upgrade
+					stages. All comparison processing happens locally in your browser, so your data never
+					leaves your network.
+				</p>
+			{:else if mode === 'Guided'}
+				<h5 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+					Guided Mode — Enter BIG-IP IP Addresses
+				</h5>
+				<p class="leading-tight font-normal text-gray-700 dark:text-gray-400">
+					Select the target OS (Linux, Windows CMD, or Windows PowerShell), then enter the IP
+					address of each BIG-IP and the credentials. The tool will guide you through the process
+					capturing VS config, VS stats, pool config, pool stats.
+				</p>
+			{/if}
 		</Card>
 
 		<BreadcrumbStepper class="flex w-full justify-center" {steps} bind:current />
@@ -452,10 +464,12 @@
 					<Radio name="mode" bind:group={mode} value="Manual">Manual</Radio>
 				</div>
 			</div>
-			<div class="my-2">
-				<Label class="mb-2 block">Device OS</Label>
-				<Select class="mt-2" items={devices} bind:value={targetedDevice} />
-			</div>
+			{#if mode === 'Guided'}
+				<div class="my-2">
+					<Label class="mb-2 block">Device OS</Label>
+					<Select class="mt-2" items={devices} bind:value={targetedDevice} />
+				</div>
+			{/if}
 		</Card>
 
 		<!-- Code Block Snippet -->
