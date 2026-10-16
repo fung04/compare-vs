@@ -98,35 +98,35 @@ export function compareSnapshots(before: F5Snapshot, after: F5Snapshot): Compare
 
 			vsBefore: b
 				? {
-						availabilityState_virtual: b.availabilityState_virtual,
-						enableState_virtual: b.enableState_virtual,
-						statusReason_virtual: b.statusReason_virtual
-					}
+					availabilityState_virtual: b.availabilityState_virtual,
+					enableState_virtual: b.enableState_virtual,
+					statusReason_virtual: b.statusReason_virtual
+				}
 				: undefined,
 			vsAfter: a
 				? {
-						availabilityState_virtual: a.availabilityState_virtual,
-						enableState_virtual: a.enableState_virtual,
-						statusReason_virtual: a.statusReason_virtual
-					}
+					availabilityState_virtual: a.availabilityState_virtual,
+					enableState_virtual: a.enableState_virtual,
+					statusReason_virtual: a.statusReason_virtual
+				}
 				: undefined,
 			vsChangeType,
 
 			poolBefore: b
 				? {
-						availabilityState_pool: b.availabilityState_pool,
-						statusReason_pool: b.statusReason_pool,
-						activeMemberCnt: b.activeMemberCnt,
-						memberCnt: b.memberCnt
-					}
+					availabilityState_pool: b.availabilityState_pool,
+					statusReason_pool: b.statusReason_pool,
+					activeMemberCnt: b.activeMemberCnt,
+					memberCnt: b.memberCnt
+				}
 				: undefined,
 			poolAfter: a
 				? {
-						availabilityState_pool: a.availabilityState_pool,
-						statusReason_pool: a.statusReason_pool,
-						activeMemberCnt: a.activeMemberCnt,
-						memberCnt: a.memberCnt
-					}
+					availabilityState_pool: a.availabilityState_pool,
+					statusReason_pool: a.statusReason_pool,
+					activeMemberCnt: a.activeMemberCnt,
+					memberCnt: a.memberCnt
+				}
 				: undefined,
 			poolChangeType,
 
@@ -234,17 +234,17 @@ function compareGTMRecord(before?: F5GTMRecord, after?: F5GTMRecord): GtmDiff {
 			poolPath: pp,
 			poolBefore: bp
 				? {
-						availabilityState_pool: bp.availabilityState_pool,
-						enabledState_pool: bp.enabledState_pool,
-						statusReason_pool: bp.statusReason_pool
-					}
+					availabilityState_pool: bp.availabilityState_pool,
+					enabledState_pool: bp.enabledState_pool,
+					statusReason_pool: bp.statusReason_pool
+				}
 				: undefined,
 			poolAfter: ap
 				? {
-						availabilityState_pool: ap.availabilityState_pool,
-						enabledState_pool: ap.enabledState_pool,
-						statusReason_pool: ap.statusReason_pool
-					}
+					availabilityState_pool: ap.availabilityState_pool,
+					enabledState_pool: ap.enabledState_pool,
+					statusReason_pool: ap.statusReason_pool
+				}
 				: undefined,
 			poolChangeType,
 			memberDiffs,
@@ -268,17 +268,17 @@ function compareGTMRecord(before?: F5GTMRecord, after?: F5GTMRecord): GtmDiff {
 
 		wideipBefore: before
 			? {
-					availabilityState_wideIp: before.availabilityState_wideIp,
-					enabledState_wideIp: before.enabledState_wideIp,
-					statusReason_wideIp: before.statusReason_wideIp
-				}
+				availabilityState_wideIp: before.availabilityState_wideIp,
+				enabledState_wideIp: before.enabledState_wideIp,
+				statusReason_wideIp: before.statusReason_wideIp
+			}
 			: undefined,
 		wideipAfter: after
 			? {
-					availabilityState_wideIp: after.availabilityState_wideIp,
-					enabledState_wideIp: after.enabledState_wideIp,
-					statusReason_wideIp: after.statusReason_wideIp
-				}
+				availabilityState_wideIp: after.availabilityState_wideIp,
+				enabledState_wideIp: after.enabledState_wideIp,
+				statusReason_wideIp: after.statusReason_wideIp
+			}
 			: undefined,
 		wideIpChangeType,
 
@@ -359,19 +359,19 @@ function comparePoolRecord(
 
 		poolBefore: before
 			? {
-					availabilityState_pool: before.availabilityState_pool,
-					statusReason_pool: before.statusReason_pool,
-					activeMemberCnt: before.activeMemberCnt,
-					memberCnt: before.memberCnt
-				}
+				availabilityState_pool: before.availabilityState_pool,
+				statusReason_pool: before.statusReason_pool,
+				activeMemberCnt: before.activeMemberCnt,
+				memberCnt: before.memberCnt
+			}
 			: undefined,
 		poolAfter: after
 			? {
-					availabilityState_pool: after.availabilityState_pool,
-					statusReason_pool: after.statusReason_pool,
-					activeMemberCnt: after.activeMemberCnt,
-					memberCnt: after.memberCnt
-				}
+				availabilityState_pool: after.availabilityState_pool,
+				statusReason_pool: after.statusReason_pool,
+				activeMemberCnt: after.activeMemberCnt,
+				memberCnt: after.memberCnt
+			}
 			: undefined,
 		poolChangeType: poolChangeType_active,
 
