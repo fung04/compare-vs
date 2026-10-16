@@ -1,9 +1,10 @@
 <script module lang="ts">
-	import type { AvailState, EnabledState } from '#lib/types.js';
+	import type { AvailState, EnabledState, ChangeType } from '#lib/types.js';
+	import { getBorderColor } from '#lib/status.js';
 
 	// Matches the gtmDiffs shape from compareSnapshots(); swap for exported types if $lib/types has them
-	type ChangeType =
-		'none' | 'degraded' | 'improved' | 'changed' | 'missing_before' | 'missing_after' | string;
+	// type ChangeType =
+	// 	'none' | 'degraded' | 'improved' | 'changed' | 'missing_before' | 'missing_after' | string;
 
 	export type GtmMember = {
 		poolMemberPath: string;
@@ -99,7 +100,10 @@
 	{/if}
 {/snippet}
 
-<Card size="sm" class="flex w-full max-w-none flex-col gap-2 p-3">
+<Card
+	size="sm"
+	class="flex w-full max-w-none flex-col gap-2 p-3 {getBorderColor(wideIp.wideIpChangeType)}"
+>
 	<!-- Wide IP header -->
 	<div class="flex items-center justify-between gap-2">
 		<span

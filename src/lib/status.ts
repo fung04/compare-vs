@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'svelte';
 import type { Indicator } from 'flowbite-svelte';
-import type { AvailState, EnabledState } from '#lib/types.js';
+import type { AvailState, EnabledState, ChangeType } from '#lib/types.js';
 
 export type IndicatorColor = ComponentProps<typeof Indicator>['color'];
 
@@ -54,5 +54,20 @@ export function getRecordTypeColor(type?: string): BadgeColor {
 			return 'pink';
 		default:
 			return 'gray';
+	}
+}
+
+export type BorderColor = 'border-l-4 border-l-red-500 dark:border-l-red-400' | 'border-l-4 border-l-green-500 dark:border-l-green-400' | 'border-l-4 border-l-amber-500 dark:border-l-amber-400' | '';
+
+export function getBorderColor(type: ChangeType | undefined): BorderColor {
+	switch (type) {
+		case 'degraded':
+			return 'border-l-4 border-l-red-500 dark:border-l-red-400';
+		case 'improved':
+			return 'border-l-4 border-l-green-500 dark:border-l-green-400';
+		case 'changed':
+			return 'border-l-4 border-l-amber-500 dark:border-l-amber-400';
+		default:
+			return '';
 	}
 }

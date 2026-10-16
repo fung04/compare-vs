@@ -17,7 +17,7 @@
 		AccordionItem
 	} from 'flowbite-svelte';
 	import { DotsVerticalOutline } from 'flowbite-svelte-icons';
-	import { getAvailColor, getEnabledColor, stripCommon } from '#lib/status.js';
+	import { getAvailColor, getEnabledColor, getBorderColor, stripCommon } from '#lib/status.js';
 	import GtmCard, { type GtmWideIp } from '#lib/components/GtmCard.svelte';
 
 	// ── Load snapshots ────────────────────────────────────────────────────────
@@ -128,7 +128,12 @@
 								{/snippet}
 								<div class={gridClass}>
 									{#each filteredDiffs(result) as vs, idx (vs.vsPath)}
-										<Card size="sm" class="flex w-full max-w-none flex-1 flex-col p-2">
+										<Card
+											size="sm"
+											class="flex w-full max-w-none flex-1 flex-col p-2 {getBorderColor(
+												vs.vsChangeType
+											)}"
+										>
 											<Tooltip triggeredBy="#vspath-{i}-{idx}" placement="bottom">
 												<p class="w-64">{vs.vsAfter?.statusReason_virtual}</p>
 											</Tooltip>
@@ -316,7 +321,12 @@
 								{/snippet}
 								<div class={gridClass}>
 									{#each filteredPools(result) as pool, idx (pool.poolPath)}
-										<Card size="sm" class="flex w-full max-w-none flex-1 flex-col p-2">
+										<Card
+											size="sm"
+											class="flex w-full max-w-none flex-1 flex-col p-2 {getBorderColor(
+												pool.poolChangeType
+											)}"
+										>
 											<Accordion flush class="mb-2">
 												<AccordionItem
 													open
