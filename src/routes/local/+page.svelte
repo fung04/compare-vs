@@ -410,11 +410,10 @@
 	];
 
 	let codeBlockValue = $state('');
-	let codeBlockSuccess = $state(false);
 
-	function onclick(ev: MouseEvent): void {
+	function onclick(ev: MouseEvent, index: number): void {
 		const target = ev.target as HTMLElement;
-		const codeBlock = target.ownerDocument.querySelector('#code-block');
+		const codeBlock = target.ownerDocument.querySelector(`#code-block-${index}`);
 		if (codeBlock) {
 			codeBlockValue = codeBlock.textContent || '';
 		}
@@ -473,7 +472,7 @@
 		</Card>
 
 		<!-- Code Block Snippet -->
-		{#snippet codeblock(script: string)}
+		{#snippet codeblock(script: string, index: number)}
 			<div
 				class="mx-2 w-full overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-2xl"
 			>
@@ -488,25 +487,26 @@
 					</div>
 					<span class="font-mono text-xs text-slate-400">index.js</span>
 					<Clipboard
-						color={codeBlockSuccess ? 'alternative' : 'primary'}
+						color="primary"
 						bind:value={codeBlockValue}
-						bind:success={codeBlockSuccess}
 						size="sm"
 						class="h-8 justify-end px-2.5 font-medium focus:ring-0"
-						{onclick}
+						onclick={(e) => onclick(e, index)}
 					>
-						{#if codeBlockSuccess}
-							<CheckOutline class="h-3 w-3" /> Copied
-						{:else}
-							<ClipboardCleanSolid class="h-3 w-3" /> Copy
-						{/if}
+						{#snippet children(success)}
+							{#if success}
+								<CheckOutline class="h-3 w-3 text-white" /> Copied
+							{:else}
+								<ClipboardCleanSolid class="h-3 w-3" /> Copy
+							{/if}
+						{/snippet}
 					</Clipboard>
 				</div>
 
 				<!-- Code Content Area -->
 				<pre
 					class="scrollbar-thin overflow-x-auto p-4 font-mono text-sm leading-relaxed text-slate-100">
-					<code id="code-block" class="block text-left font-mono whitespace-pre">{script}</code>
+					<code id="code-block-{index}" class="block text-left font-mono whitespace-pre">{script}</code>
 				</pre>
 			</div>
 		{/snippet}
@@ -559,7 +559,8 @@
 						<Label class="my-2 block"
 							>Windows PowerShell script to run on the device {device.ip || `#${index + 1}`}:</Label
 						>
-						{@render codeblock(`
+						{@render codeblock(
+							`
 $v  = curl.exe -sk -u ${device.username}:${device.password} "https://${device.ip}/mgmt/tm/ltm/virtual" | Out-String
 $vs = curl.exe -sk -u ${device.username}:${device.password} "https://${device.ip}/mgmt/tm/ltm/virtual/stats" | Out-String
 $ps = curl.exe -sk -u ${device.username}:${device.password} "https://${device.ip}/mgmt/tm/ltm/pool/stats" | Out-String
@@ -580,12 +581,15 @@ $gtm = '{' + ($gtmParts -join ',') + '}'
 		: ''
 }
 '{"virtual":' + $v + ',"virtualStats":' + $vs + ',"poolStats":' + $ps + ',"pool":' + $p + ${device.isGTM ? `',"gtm":' + $gtm + ` : ''}'}' | Set-Content ${device.ip}_f5.json
-`)}
+`,
+							index
+						)}
 					{:else if targetedDevice === 'windows_cmd'}
 						<Label class="my-2 block"
 							>Windows CMD script to run on the device {device.ip || `#${index + 1}`}:</Label
 						>
-						{@render codeblock(`(
+						{@render codeblock(
+							`(
   echo {"virtual":
   curl.exe -sk -u ${device.username}:${device.password} "https://${device.ip}/mgmt/tm/ltm/virtual"
   echo ,"virtualStats":
@@ -610,12 +614,15 @@ $gtm = '{' + ($gtmParts -join ',') + '}'
 			: ''
 	}
   echo }
-) > ${device.ip}_cmd_f5.json`)}
+) > ${device.ip}_cmd_f5.json`,
+							index
+						)}
 					{:else if targetedDevice === 'linux'}
 						<Label class="my-2 block"
 							>Linux Bash script to run on the device {device.ip || `#${index + 1}`}:</Label
 						>
-						{@render codeblock(`{
+						{@render codeblock(
+							`{
   echo -n '{"virtual":'
   curl -sk -g -u '${device.username}:${device.password}' 'https://${device.ip}/mgmt/tm/ltm/virtual'
   echo -n ',"virtualStats":'
@@ -648,7 +655,9 @@ ${
 		: ''
 }
   echo '}'
-} > /var/tmp/${device.ip}_f5.json`)}
+} > /var/tmp/${device.ip}_f5.json`,
+							index
+						)}
 					{/if}
 				{/each}
 			</Card>
