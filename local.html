@@ -22,10 +22,10 @@
 		<link href="./_app/immutable/chunks/DeQlUTAZ.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/CVBb5nTz.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/DLe2lvp9.js" rel="modulepreload">
-		<link href="./_app/immutable/entry/app.WIWBJFnn.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.Uk0EyPLa.js" rel="modulepreload">
 		<link href="./_app/immutable/nodes/0.CxHZxXXO.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/As-TjivK.js" rel="modulepreload">
-		<link href="./_app/immutable/nodes/4.CzP0Qw8X.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/4.DhV3PFbu.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/DH0dkOa4.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/DtYvUkAr.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/Drles9vM.js" rel="modulepreload">
@@ -40,19 +40,31 @@
 		<div style="display: contents">
 			<script>
 				{
-					__sveltekit_rmelhx = {
+					__sveltekit_1e4v8e6 = {
 						base: new URL(".", location).pathname.slice(0, -1),
-						version: "1792138734052",
+						version: "1792862685753",
 						assets: "/compare-vs"
 					};
 
 					const element = document.currentScript.parentElement;
 
 					import("./_app/immutable/entry/start.Bsnbdlvk.js").then(async (kit) => {
-						kit.init(__sveltekit_rmelhx);
-						const app = await import("./_app/immutable/entry/app.WIWBJFnn.js");
+						kit.init(__sveltekit_1e4v8e6);
+						const app = await import("./_app/immutable/entry/app.Uk0EyPLa.js");
 						kit.start(app, element);
 					});
+
+					if ('serviceWorker' in navigator) {
+						const script_url = './service-worker.js';
+						const policy = globalThis?.window?.trustedTypes?.createPolicy(
+							'sveltekit-trusted-url',
+							{ createScriptURL(url) { return url; } }
+						);
+						const sanitised = policy?.createScriptURL(script_url) ?? script_url;
+						addEventListener('load', function () {
+							navigator.serviceWorker.register(sanitised, { type: 'module' });
+						});
+					}
 				}
 			</script>
 		</div>
