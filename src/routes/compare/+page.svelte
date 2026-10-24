@@ -28,6 +28,7 @@
 	const results: (CompareResult | null)[] = credentials.map((_, i) =>
 		before[i] && after[i] ? compareSnapshots(before[i], after[i]) : null
 	);
+	console.log('DEBUG: compareresults', results);
 
 	type Filter = 'all' | 'degraded' | 'improved' | 'unchanged';
 	let filterType = $state<Filter>('all');
