@@ -50,7 +50,13 @@ export function compareSnapshots(before: F5Snapshot, after: F5Snapshot): Compare
 		const b = beforeMap.get(vsPath);
 		const a = afterMap.get(vsPath);
 
-		const vsChangeType = calcChangeType(b?.availabilityState_virtual, a?.availabilityState_virtual);
+		const vsChangeType = (() => {
+			const ct = calcChangeType(b?.availabilityState_virtual, a?.availabilityState_virtual);
+			// Also flag if active member count dropped even when pool stays 'available'
+			if (ct === 'none' && b && a && b.activeMemberCnt !== a.activeMemberCnt)
+				return 'changed' as ChangeType;
+			return ct;
+		})();
 		const poolChangeType = (() => {
 			const ct = calcChangeType(b?.availabilityState_pool, a?.availabilityState_pool);
 			// Also flag if active member count dropped even when pool stays 'available'
@@ -89,7 +95,7 @@ export function compareSnapshots(before: F5Snapshot, after: F5Snapshot): Compare
 		const hasImprovement =
 			vsChangeType === 'improved' ||
 			poolChangeType === 'improved' ||
-			memberDiffs.some((m) => m.changeType === 'improved');
+			memberDiffs.some((m) => m.changeType === 'changed');
 
 		diffs.push({
 			vsPath,
@@ -352,7 +358,7 @@ function comparePoolRecord(
 		memberDiffs.some((m) => m.changeType === 'degraded' || m.changeType === 'missing_after');
 
 	const hasImprovement =
-		poolChangeType_active === 'improved' || memberDiffs.some((m) => m.changeType === 'improved');
+		poolChangeType_active === 'improved' || memberDiffs.some((m) => m.changeType === 'changed');
 
 	return {
 		poolPath: (before ?? after)?.poolPath ?? '',
